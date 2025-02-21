@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ChatListTileShimmer extends StatelessWidget {
+class ListTileShimmer extends StatelessWidget {
   final int count; // Number of shimmer tiles to display
-  const ChatListTileShimmer({
+  const ListTileShimmer({
     super.key,
     required this.count,
   });
@@ -61,10 +61,10 @@ class ChatListTileShimmer extends StatelessWidget {
                       child: Container(
                         width: 100,
                         height: 20,
-
                         decoration: BoxDecoration(
                           color: highlight,
                           borderRadius: BorderRadius.circular(8),)
+
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -92,10 +92,10 @@ class ChatListTileShimmer extends StatelessWidget {
                           child: Container(
                             width: 16,
                             height: 16,
+                            decoration: BoxDecoration(
+                              color: highlight,
+                              borderRadius: BorderRadius.circular(8),)
 
-                              decoration: BoxDecoration(
-                                color: highlight,
-                                borderRadius: BorderRadius.circular(8),)
                           ),
                         ),
                       ],
@@ -113,11 +113,11 @@ class ChatListTileShimmer extends StatelessWidget {
                     baseColor: base,
                     highlightColor: highlight,
                     child: Container(
-                      decoration: BoxDecoration(
-                        color: base,
-                        borderRadius: BorderRadius.circular(8),),
                       width: 40,
                       height: 13,
+                      decoration: BoxDecoration(
+                        color: base,
+                        borderRadius: BorderRadius.circular(8),)
 
                     ),
                   ),

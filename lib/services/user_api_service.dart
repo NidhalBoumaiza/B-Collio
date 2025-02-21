@@ -94,14 +94,13 @@ class UserApiService {
   }
 
   /// Update Profile
-  Future<User> updateProfile({
+  Future<(User?, int)> updateProfile({
     required String name,
     required String image,
     required String about,
   }) async {
     final url = Uri.parse('$baseUrl/user/update');
 
-    // Retrieve token from SharedPreferences
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     if (token == null) {
@@ -114,7 +113,7 @@ class UserApiService {
       'about': about,
     };
 
-    debugPrint('Update payload: $payload'); // Debug payload
+    debugPrint('Update payload: $payload');
 
     final response = await http.post(
       url,
@@ -129,10 +128,9 @@ class UserApiService {
     debugPrint('Update response body: ${response.body}');
 
     if (response.statusCode == 200) {
-      return User.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to update profile: ${response.body}');
+      return (User.fromJson(json.decode(response.body)), response.statusCode);
     }
+    return (null, response.statusCode);
   }
 
 

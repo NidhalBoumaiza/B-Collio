@@ -170,7 +170,7 @@ class UserController extends GetxController {
     }
   }
 
-  Future<void> updateProfile({
+  Future<(bool, int)> updateProfile({
     required String name,
     required String image,
     required String about,
@@ -178,17 +178,25 @@ class UserController extends GetxController {
     isLoading.value = true;
 
     try {
-      final updatedUser = await userApiService.updateProfile(
+      final (updatedUser, statusCode) = await userApiService.updateProfile(
         name: name,
         image: image,
         about: about,
       );
 
-      currentUser.value = updatedUser;
-      debugPrint('Profile updated successfully: $updatedUser');
+      if (statusCode == 200 && updatedUser != null) {
+        currentUser.value = updatedUser;
+        debugPrint('Profile updated successfully: $updatedUser');
+        return (true, statusCode);
+      } else {
+        debugPrint('Profile update failed with status: $statusCode');
+        Get.snackbar('Error', 'Failed to update profile. Status: $statusCode');
+        return (false, statusCode);
+      }
     } catch (e) {
       debugPrint('Profile update error: $e');
       Get.snackbar('Error', 'Failed to update profile. Please try again.');
+      return (false, 0); // 0 indicates an error case
     } finally {
       isLoading.value = false;
     }

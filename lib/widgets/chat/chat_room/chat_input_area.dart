@@ -171,7 +171,8 @@ class _ChatInputAreaState extends State<ChatInputArea>
                 ),
                 child: TextField(
                   controller: _messageController,
-                  maxLines: null,
+                  maxLines: 5,
+                  minLines: 1,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 10),

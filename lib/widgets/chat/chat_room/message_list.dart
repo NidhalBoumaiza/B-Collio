@@ -75,202 +75,205 @@ class _MessageListState extends State<MessageList> {
     final theme = Theme.of(context);
 
     return Obx(() {
-      return ListView.builder(
-        controller: widget.scrollController,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        itemCount: widget.messages.length,
-        itemBuilder: (context, index) {
-          final message = widget.messages[index];
-          final currentUserId = Get.arguments?['currentUserId'] ??
-              Get.find<UserController>().currentUser.value?.id;
-          final isMe = message.senderId == currentUserId &&
-              !message.isFromAI; // Check if it's a user message
-          final isAI = message.isFromAI; // Check if it's an AI message
+      return GestureDetector(
+        onTap: ()=> FocusScope.of(context).unfocus(),
+        child: ListView.builder(
+          controller: widget.scrollController,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          itemCount: widget.messages.length,
+          itemBuilder: (context, index) {
+            final message = widget.messages[index];
+            final currentUserId = Get.arguments?['currentUserId'] ??
+                Get.find<UserController>().currentUser.value?.id;
+            final isMe = message.senderId == currentUserId &&
+                !message.isFromAI; // Check if it's a user message
+            final isAI = message.isFromAI; // Check if it's an AI message
 
-          final type = message.type;
-          final body = message.body;
-          final image = message.image;
-          final audio = message.audio;
+            final type = message.type;
+            final body = message.body;
+            final image = message.image;
+            final audio = message.audio;
 
-          // Toggle the timestamp visibility on tap
-          void _onMessageTap() {
-            if (message.type == 'text') {
-              setState(() {
-                _showTimestamp[index] = !(_showTimestamp[index] ?? false);
-              });
+            // Toggle the timestamp visibility on tap
+            void _onMessageTap() {
+              if (message.type == 'text') {
+                setState(() {
+                  _showTimestamp[index] = !(_showTimestamp[index] ?? false);
+                });
+              }
             }
-          }
 
-          return Align(
-            alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
-            child: (image != null && image.isNotEmpty)
-                ? GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => FullScreenImageViewer(
-                            imageUrl: image,
+            return Align(
+              alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
+              child: (image != null && image.isNotEmpty)
+                  ? GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => FullScreenImageViewer(
+                              imageUrl: image,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: FadeInImage(
-                          placeholder:
-                              const AssetImage('assets/placeholder.png'),
-                          image: NetworkImage(image),
-                          width: 150,
-                          height: 150,
-                          fit: BoxFit.cover,
-                          placeholderErrorBuilder:
-                              (context, error, stackTrace) {
-                            return Container(
-                              color: Colors.grey,
-                              width: 150,
-                              height: 150,
-                              child: const Icon(Icons.broken_image),
-                            );
-                          },
-                          imageErrorBuilder: (context, error, stackTrace) {
-                            return Container(
-                              color: Colors.grey,
-                              width: 150,
-                              height: 150,
-                              child: const Icon(Icons.broken_image),
-                            );
-                          },
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: FadeInImage(
+                            placeholder:
+                                const AssetImage('assets/placeholder.png'),
+                            image: NetworkImage(image),
+                            width: 150,
+                            height: 150,
+                            fit: BoxFit.cover,
+                            placeholderErrorBuilder:
+                                (context, error, stackTrace) {
+                              return Container(
+                                color: Colors.grey,
+                                width: 150,
+                                height: 150,
+                                child: const Icon(Icons.broken_image),
+                              );
+                            },
+                            imageErrorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                color: Colors.grey,
+                                width: 150,
+                                height: 150,
+                                child: const Icon(Icons.broken_image),
+                              );
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                : (audio != null && audio.isNotEmpty)
-                    ? Container(
-                        margin: const EdgeInsets.symmetric(vertical: 4),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 8),
-                        width: 250,
-                        decoration: BoxDecoration(
-                          color: isMe
-                              ? theme.appBarTheme.backgroundColor
-                              : theme.colorScheme.surface,
-                          borderRadius: BorderRadius.circular(12).copyWith(
-                            bottomRight:
-                                isMe ? Radius.zero : const Radius.circular(12),
-                            bottomLeft:
-                                isMe ? const Radius.circular(12) : Radius.zero,
+                    )
+                  : (audio != null && audio.isNotEmpty)
+                      ? Container(
+                          margin: const EdgeInsets.symmetric(vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 8),
+                          width: 250,
+                          decoration: BoxDecoration(
+                            color: isMe
+                                ? theme.appBarTheme.backgroundColor
+                                : theme.colorScheme.surface,
+                            borderRadius: BorderRadius.circular(12).copyWith(
+                              bottomRight:
+                                  isMe ? Radius.zero : const Radius.circular(12),
+                              bottomLeft:
+                                  isMe ? const Radius.circular(12) : Radius.zero,
+                            ),
                           ),
-                        ),
-                        child: Row(
-                          children: [
-                            Obx(() => IconButton(
-                                  icon: Icon(
-                                    _playingIndex.value == index
-                                        ? Iconsax.pause
-                                        : Iconsax.play,
+                          child: Row(
+                            children: [
+                              Obx(() => IconButton(
+                                    icon: Icon(
+                                      _playingIndex.value == index
+                                          ? Iconsax.pause
+                                          : Iconsax.play,
+                                      color: isMe
+                                          ? Colors.white
+                                          : theme.colorScheme.onSurface,
+                                    ),
+                                    onPressed: () =>
+                                        _togglePlayPause(index, audio),
+                                  )),
+                              Obx(() {
+                                return _playingIndex.value == index
+                                    ? const SizedBox.shrink()
+                                    : Flexible(
+                                        child: Text(
+                                          "Voice message",
+                                          overflow: TextOverflow.ellipsis,
+                                          style:
+                                              theme.textTheme.bodySmall?.copyWith(
+                                            color: isMe
+                                                ? Colors.white
+                                                : theme.colorScheme.onSurface,
+                                          ),
+                                        ),
+                                      );
+                              }),
+                              const Spacer(),
+                              Obx(() {
+                                return _playingIndex.value == index
+                                    ? Icon(
+                                        Iconsax.sound,
+                                        color: isMe
+                                            ? Colors.white
+                                            : theme.colorScheme.onSurface,
+                                      )
+                                    : const SizedBox.shrink();
+                              }),
+                            ],
+                          ),
+                        )
+                      : GestureDetector(
+                          onTap: _onMessageTap, // Trigger timestamp display
+                          child: Column(
+                            crossAxisAlignment: isMe
+                                ? CrossAxisAlignment.end
+                                : CrossAxisAlignment.start,
+                            children: [
+                              if (isAI) // Display app icon for AI messages
+                                Row(
+                                  children: [
+                                    CircleAvatar(
+                                      backgroundColor: theme.colorScheme.surface,
+                                      child: Icon(
+                                        Icons
+                                            .android, // Use an appropriate icon for the AI chatbot
+                                        color: theme.colorScheme.onSurface,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                  ],
+                                ),
+                              Container(
+                                margin: const EdgeInsets.symmetric(vertical: 4),
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  color: isMe
+                                      ? theme.appBarTheme.backgroundColor
+                                      : theme.colorScheme.surface,
+                                  borderRadius:
+                                      BorderRadius.circular(12).copyWith(
+                                    bottomRight: isMe
+                                        ? Radius.zero
+                                        : const Radius.circular(12),
+                                    bottomLeft: isMe
+                                        ? const Radius.circular(12)
+                                        : Radius.zero,
+                                  ),
+                                ),
+                                child: Text(
+                                  body.isNotEmpty ? body : '[No content]',
+                                  style: theme.textTheme.bodyMedium?.copyWith(
                                     color: isMe
                                         ? Colors.white
                                         : theme.colorScheme.onSurface,
                                   ),
-                                  onPressed: () =>
-                                      _togglePlayPause(index, audio),
-                                )),
-                            Obx(() {
-                              return _playingIndex.value == index
-                                  ? const SizedBox.shrink()
-                                  : Flexible(
-                                      child: Text(
-                                        "Voice message",
-                                        overflow: TextOverflow.ellipsis,
-                                        style:
-                                            theme.textTheme.bodySmall?.copyWith(
-                                          color: isMe
-                                              ? Colors.white
-                                              : theme.colorScheme.onSurface,
-                                        ),
-                                      ),
-                                    );
-                            }),
-                            const Spacer(),
-                            Obx(() {
-                              return _playingIndex.value == index
-                                  ? Icon(
-                                      Iconsax.sound,
-                                      color: isMe
-                                          ? Colors.white
-                                          : theme.colorScheme.onSurface,
-                                    )
-                                  : const SizedBox.shrink();
-                            }),
-                          ],
-                        ),
-                      )
-                    : GestureDetector(
-                        onTap: _onMessageTap, // Trigger timestamp display
-                        child: Column(
-                          crossAxisAlignment: isMe
-                              ? CrossAxisAlignment.end
-                              : CrossAxisAlignment.start,
-                          children: [
-                            if (isAI) // Display app icon for AI messages
-                              Row(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundColor: theme.colorScheme.surface,
-                                    child: Icon(
-                                      Icons
-                                          .android, // Use an appropriate icon for the AI chatbot
-                                      color: theme.colorScheme.onSurface,
+                                ),
+                              ),
+                              if (_showTimestamp[index] ==
+                                  true) // Show timestamp below the container
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 4),
+                                  child: Text(
+                                    "Sent at: ${formatTimestamp(message.createdAt)}",
+                                    style: theme.textTheme.bodySmall?.copyWith(
+                                      color: theme.colorScheme.onSurface
+                                          .withOpacity(0.7),
                                     ),
                                   ),
-                                  const SizedBox(width: 8),
-                                ],
-                              ),
-                            Container(
-                              margin: const EdgeInsets.symmetric(vertical: 4),
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                color: isMe
-                                    ? theme.appBarTheme.backgroundColor
-                                    : theme.colorScheme.surface,
-                                borderRadius:
-                                    BorderRadius.circular(12).copyWith(
-                                  bottomRight: isMe
-                                      ? Radius.zero
-                                      : const Radius.circular(12),
-                                  bottomLeft: isMe
-                                      ? const Radius.circular(12)
-                                      : Radius.zero,
                                 ),
-                              ),
-                              child: Text(
-                                body.isNotEmpty ? body : '[No content]',
-                                style: theme.textTheme.bodyMedium?.copyWith(
-                                  color: isMe
-                                      ? Colors.white
-                                      : theme.colorScheme.onSurface,
-                                ),
-                              ),
-                            ),
-                            if (_showTimestamp[index] ==
-                                true) // Show timestamp below the container
-                              Padding(
-                                padding: const EdgeInsets.only(top: 4),
-                                child: Text(
-                                  "Sent at: ${formatTimestamp(message.createdAt)}",
-                                  style: theme.textTheme.bodySmall?.copyWith(
-                                    color: theme.colorScheme.onSurface
-                                        .withOpacity(0.7),
-                                  ),
-                                ),
-                              ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-          );
-        },
+            );
+          },
+        ),
       );
     });
   }

@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../controllers/user_controller.dart';
 import '../../themes/theme.dart';
+import '../../widgets/base_widget/custom_snack_bar.dart';
 import '../../widgets/base_widget/input_field.dart';
 import '../../widgets/base_widget/primary_button.dart';
 import '../../widgets/base_widget/otp_loading_indicator.dart';
@@ -56,17 +57,21 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     }
 
     // Call the update profile method
-    await userController.updateProfile(
-      name:
-          name.isNotEmpty ? name : userController.currentUser.value?.name ?? '',
+    final (success, statusCode) = await userController.updateProfile(
+      name: name.isNotEmpty ? name : userController.currentUser.value?.name ??
+          '',
       image: imageUrl ?? '',
-      about: about.isNotEmpty
-          ? about
-          : userController.currentUser.value?.about ?? '',
+      about: about.isNotEmpty ? about : userController.currentUser.value
+          ?.about ?? '',
     );
 
     // Navigate back to the previous screen
-    Get.back();
+    if (success && statusCode == 200) {
+      Get.back(); // Only navigate back on success
+      showSuccessSnackbar("Profile updated successfully.".tr);
+    } else {
+      showErrorSnackbar("Failed to update profile please try again later.".tr);
+    }
   }
 
   @override
@@ -175,8 +180,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         imagePath: "assets/3d_icons/user_icon.png",
                       ),
                       const SizedBox(height: 20),
-                      /*
-                      // About Input
+
+                   /*// About Input
                       StyledInputField(
                         controller: aboutController,
                         label: 'About'.tr,
