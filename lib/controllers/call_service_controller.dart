@@ -25,6 +25,7 @@ class CallServiceController extends GetxController {
     required String targetUserName,
     required bool isVideoCall,
   }) {
+    print ('/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/**/*/*/*/*/*/*/*/*/*/*/*');
     return ZegoSendCallInvitationButton(
       isVideoCall: isVideoCall,
       resourceID: "zegouikit_call",

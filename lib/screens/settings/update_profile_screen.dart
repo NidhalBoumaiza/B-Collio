@@ -82,40 +82,39 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     return Obx(() {
       final isLoading = userController.isLoading.value;
 
-      return Stack(
-        children: [
-          Scaffold(
-            backgroundColor: theme.scaffoldBackgroundColor,
-            appBar: AppBar(
-              flexibleSpace: isDarkMode
-                  ? null
-                  : Container(
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [kLightOrange7, kLightOrange4],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
+      return GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Stack(
+          children: [
+            Scaffold(
+              backgroundColor: theme.scaffoldBackgroundColor,
+              appBar: AppBar(
+                flexibleSpace: isDarkMode
+                    ? null
+                    : Container(
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [kLightOrange7, kLightOrange4],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
                         ),
                       ),
-                    ),
-              elevation: 0,
-              title: Text(
-                'Update Profile'.tr,
-                style:
-                    theme.textTheme.titleLarge?.copyWith(color: Colors.white),
+                elevation: 0,
+                title: Text(
+                  'Update Profile'.tr,
+                  style:
+                      theme.textTheme.titleLarge?.copyWith(color: Colors.white),
+                ),
+                centerTitle: true,
               ),
-              centerTitle: true,
-            ),
-            body: SafeArea(
-              child: GestureDetector(
-                onTap: () => FocusScope.of(context).unfocus(),
+              body: SafeArea(
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 20),
-
                       // Profile Picture
                       Center(
                         child: GestureDetector(
@@ -213,9 +212,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                 ),
               ),
             ),
-          ),
-          if (isLoading) const OtpLoadingIndicator(),
-        ],
+            if (isLoading) const OtpLoadingIndicator(),
+          ],
+        ),
       );
     });
   }

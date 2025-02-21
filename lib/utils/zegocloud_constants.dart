@@ -1,5 +1,5 @@
 class ZegoCloudConstants {
-  static const int appID = 2122965234;
+  static const int appID = 1458577840;
   static const String appSign =
-      '1b145ccc6f5551c76ce81054edde1aa5497fb6b426d182626a7d2a997df9c9bd';
+      '664c49ff0480515bcbc004f5fcc60be6e3f9bd3380eecc7e9efb14022c91fac4';
 }
