@@ -124,10 +124,23 @@ class _HomePageState extends State<HomePage> {
         actions: [
           Obx(() {
             if (!isSearching.value) {
-              return IconButton(
-                splashRadius: 24,
-                onPressed: () => isSearching.value = true,
-                icon: const Icon(Icons.search, color: Colors.white),
+              return Row(
+                children: [
+                  IconButton(
+                    splashRadius: 24,
+                    onPressed: () => isSearching.value = true,
+                    icon: const Icon(Icons.search, color: Colors.white),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+
+                    },
+                    child: Lottie.asset(
+                      'assets/json/robot.json',
+                      width: 50,
+                    ),
+                  ),
+                ],
               );
             }
             return const SizedBox.shrink();

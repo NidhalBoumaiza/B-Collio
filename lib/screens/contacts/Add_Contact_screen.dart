@@ -181,11 +181,11 @@ class AddContactScreen extends StatelessWidget {
           onPressed: () => Get.back(),
         ),
       ),
-      body: SingleChildScrollView(
-        // Wrap the Column in a SingleChildScrollView
-        padding: const EdgeInsets.all(16.0),
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: SingleChildScrollView(
+          // Wrap the Column in a SingleChildScrollView
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
               // Vertical Stepper

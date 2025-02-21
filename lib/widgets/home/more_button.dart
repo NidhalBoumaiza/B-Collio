@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:lottie/lottie.dart';
 import '../../screens/settings/settings_screen.dart';
 
 class MoreButton extends StatelessWidget {
@@ -38,6 +39,7 @@ class MoreButton extends StatelessWidget {
                   width: 24, // Adjust the size as needed
                   height: 24, // Adjust the size as needed
                 ),
+
                 const SizedBox(width: 12),
                 Text(
                   "Settings".tr, // Translatable label
