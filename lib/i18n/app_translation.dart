@@ -4,6 +4,8 @@ class AppTranslation extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'fr_FR': {
+          'chat_bot_clear' : 'Effacer la conversation',
+          'chat_bot_close' : 'Fermer',
           'welcome_message': 'Vous connecter au monde avec facilité et style.',
           'feature_secure_title': 'Conversations sécurisées',
           'feature_secure_description':
@@ -159,6 +161,8 @@ class AppTranslation extends Translations {
           'step_2': 'Étape 2',
         },
         'ar_AR': {
+          'chat_bot_clear' : 'مسح الدردشة',
+          'chat_bot_close' : 'إغلاق',
           'welcome_message': 'توصيلك بالعالم بسهولة وأناقة.',
           'feature_secure_title': 'محادثات آمنة',
           'feature_secure_description':
@@ -306,6 +310,8 @@ class AppTranslation extends Translations {
           'step_2': 'الخطوة 2',
         },
         'en_US': {
+          'chat_bot_clear' : 'Clear Chat',
+          'chat_bot_close' : 'Close',
           'welcome_message': 'Connecting you to the world with ease and style.',
           'feature_secure_title': 'Secure Conversations',
           'feature_secure_description':

@@ -1,3 +1,5 @@
+-keep class **.zego.** { *; }
+-keep class **.**.zego_zpns.** { *; }
 # Keep ZegoCloud-related classes
 -keep class **.zego.** { *; }
 -keep class im.zego.** { *; }

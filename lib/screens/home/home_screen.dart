@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                         : kLightOrange7,
                     foregroundColor: isDarkMode ? Colors.black : Colors.white,
                   ),
-                  child: Text("Close".tr),
+                  child: Text("chat_bot_close".tr),
                 ),
                 ElevatedButton(
                   onPressed: chatbotController.clearConversation,
@@ -112,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                         : kLightOrange7,
                     foregroundColor: isDarkMode ? Colors.black : Colors.white,
                   ),
-                  child: Text("Clear Chat".tr),
+                  child: Text("chat_bot_clear".tr),
                 ),
               ],
             ),
@@ -346,11 +346,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                   GestureDetector(
                     onTap: _showChatbotModal,
-                    child: Icon( Icons.chat_bubble_outline, color: Colors.white),
-                    // Lottie.asset(
-                    //   'assets/json/robot.json',
-                    //   width: 50,
-                    // ),
+                    child:
+                    Lottie.asset(
+                      'assets/json/robot.json',
+                      width: 50,
+                    ),
                   ),
                 ],
               );
@@ -366,11 +366,11 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           Get.to(() => AllContactsScreen());
         },
-        child:  Icon(Icons.add),
-        // Lottie.asset(
-        //   'assets/json/add.json',
-        //   repeat: true,
-        // ),
+        child:
+        Lottie.asset(
+          'assets/json/add.json',
+          repeat: true,
+        ),
       ),
     );
   }

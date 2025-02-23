@@ -5,10 +5,10 @@ packages:
     dependency: transitive
     description:
       name: _flutterfire_internals
-      sha256: e4f2a7ef31b0ab2c89d2bde35ef3e6e6aff1dce5e66069c6540b0e9cfe33ee6b
+      sha256: "401dd18096f5eaa140404ccbbbf346f83c850e6f27049698a7ee75a3488ddb32"
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.50"
+    version: "1.3.52"
   archive:
     dependency: transitive
     description:
@@ -161,6 +161,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  cloud_firestore:
+    dependency: "direct main"
+    description:
+      name: cloud_firestore
+      sha256: "8dfe49146560af035314477995bdfb4a7104f33cb7f881748572fbda38ecfa55"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.6.4"
+  cloud_firestore_platform_interface:
+    dependency: transitive
+    description:
+      name: cloud_firestore_platform_interface
+      sha256: dc0bcc3239a4feaa4b7b184dc4b689bc97e6cea1a8320ee0d7ee64b3607858ea
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.6.4"
+  cloud_firestore_web:
+    dependency: transitive
+    description:
+      name: cloud_firestore_web
+      sha256: "5091ed6771c886c9a93b1ec1ffa61770056210f1a3312095a73a5a4bab0c6a9f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.4.4"
   cloudinary:
     dependency: "direct main"
     description:
@@ -361,14 +385,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.3+3"
+  firebase_auth:
+    dependency: "direct main"
+    description:
+      name: firebase_auth
+      sha256: d0e2213daf3a740a379d4b788865dee6ada220496640abd875adb8f0fdbe5ba6
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.5.0"
+  firebase_auth_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_auth_platform_interface
+      sha256: "9c291bafc2a88599405fc810a4b4c249a40065b094379afb701efe443a3b0653"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.6.0"
+  firebase_auth_web:
+    dependency: transitive
+    description:
+      name: firebase_auth_web
+      sha256: a971b2f3a9c16b45e12687bb2e3d0da0c6fc272c4fbf6fa7833d0587844cca4d
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.14.0"
   firebase_core:
     dependency: "direct main"
     description:
       name: firebase_core
-      sha256: d851c1ca98fd5a4c07c747f8c65dacc2edd84a4d9ac055d32a5f0342529069f5
+      sha256: "6a4ea0f1d533443c8afc3d809cd36a4e2b8f2e2e711f697974f55bb31d71d1b8"
       url: "https://pub.dev"
     source: hosted
-    version: "3.10.1"
+    version: "3.12.0"
   firebase_core_platform_interface:
     dependency: transitive
     description:
@@ -381,10 +429,10 @@ packages:
     dependency: transitive
     description:
       name: firebase_core_web
-      sha256: fbc008cf390d909b823763064b63afefe9f02d8afdb13eb3f485b871afee956b
+      sha256: e47f5c2776de018fa19bc9f6f723df136bc75cdb164d64b65305babd715c8e41
       url: "https://pub.dev"
     source: hosted
-    version: "2.19.0"
+    version: "2.21.0"
   firebase_messaging:
     dependency: "direct main"
     description:
@@ -1406,45 +1454,45 @@ packages:
     source: hosted
     version: "1.0.0+5"
   zego_express_engine:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: zego_express_engine
-      sha256: "202bd2faf95ce5c85ec632014935810391c9430927a7d8760404e60a004b8535"
+      sha256: "1af0359534c684cdf0ff2736b646ca9825cdb042b07c2fabc1fbbd148596b0ff"
       url: "https://pub.dev"
     source: hosted
-    version: "3.18.1"
+    version: "3.19.0"
   zego_plugin_adapter:
     dependency: transitive
     description:
       name: zego_plugin_adapter
-      sha256: "6d29b819ee36b1f5c6c97e34b42c46d4c90ab99da29f0e1b68fdb1703871070c"
+      sha256: b8552195f1a9d055e1daa71247434f09b647837d1ac41b41a68b49a6a8bf35b6
       url: "https://pub.dev"
     source: hosted
-    version: "2.13.5"
+    version: "2.13.8"
   zego_uikit:
     dependency: transitive
     description:
       name: zego_uikit
-      sha256: "74ba92a99dd877cd6c3c2972d0b75f311815cdbcff0deff174429f8e5913b27a"
+      sha256: b120865131171107f6292fe6220f54812969463a4ba4e910ba25c75523ae0768
       url: "https://pub.dev"
     source: hosted
-    version: "2.28.1"
+    version: "2.28.6"
   zego_uikit_prebuilt_call:
     dependency: "direct main"
     description:
       name: zego_uikit_prebuilt_call
-      sha256: b002fe7337374445cc643c267366fef7b88285ff378a54f64caa14d0eba7091c
+      sha256: "8cdd2f2e0031c44ef07e58eea52fc4d963b7fe7b3b7750b23261f935a6552d6e"
       url: "https://pub.dev"
     source: hosted
-    version: "4.16.20"
+    version: "4.16.23"
   zego_uikit_signaling_plugin:
     dependency: "direct main"
     description:
       name: zego_uikit_signaling_plugin
-      sha256: aa6df3c49c0de5cf9d772b5120eff8cea5abd460cd9ef96fb4777507c032bbc4
+      sha256: "7d3bcd763657fd0eb253b05b4c84d48515e46515229884e6e3506c98ba99d453"
       url: "https://pub.dev"
     source: hosted
-    version: "2.8.8"
+    version: "2.8.11"
   zego_zim:
     dependency: "direct main"
     description:

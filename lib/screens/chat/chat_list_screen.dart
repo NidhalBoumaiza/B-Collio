@@ -70,92 +70,89 @@ class ChatList extends StatelessWidget {
         ),
         controller: _refreshController,
         onRefresh: () => _onRefresh(conversationController, userController),
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: ListView.builder(
-            itemCount: conversationController.conversations.length,
-            itemBuilder: (context, index) {
-              final conversation = conversationController.conversations[index];
-              final currentUserId = userController.currentUser.value?.id;
+        child: ListView.builder(
+          itemCount: conversationController.conversations.length,
+          itemBuilder: (context, index) {
+            final conversation = conversationController.conversations[index];
+            final currentUserId = userController.currentUser.value?.id;
 
-              // Check if it is a group conversation
-              final isGroup = conversation.isGroup ?? false;
+            // Check if it is a group conversation
+            final isGroup = conversation.isGroup ?? false;
 
-              String displayName;
-              String displayImage;
-              String displayPhoneNumber =
-                  'N/A'; // Default to 'N/A' if unavailable
-              DateTime? otherUserCreatedAt;
+            String displayName;
+            String displayImage;
+            String displayPhoneNumber =
+                'N/A'; // Default to 'N/A' if unavailable
+            DateTime? otherUserCreatedAt;
 
-              if (isGroup) {
-                displayName = conversation.name ?? "Group Chat";
-                displayImage = conversation.logo ?? "";
-              } else {
-                final otherUser = conversation.users.firstWhere(
-                  (user) => user.id != currentUserId,
-                  orElse: () => User(
-                    id: '',
-                    name: 'Unknown',
-                    email: '',
-                    image: '',
-                    phoneNumber: 'N/A',
-                  ),
-                );
-
-                displayName = otherUser.name ?? 'Unknown';
-                displayImage = otherUser.image ?? '';
-                displayPhoneNumber = otherUser.phoneNumber ?? 'N/A';
-                otherUserCreatedAt = otherUser.createdAt;
-              }
-
-              final lastMessage = conversation.messages.isNotEmpty
-                  ? conversation.messages.last
-                  : null;
-
-              String lastMessageText = 'No messages yet';
-              if (lastMessage != null) {
-                if (lastMessage.image != null && lastMessage.image!.isNotEmpty) {
-                  lastMessageText = "Image was sent";
-                } else if (lastMessage.audio != null &&
-                    lastMessage.audio!.isNotEmpty) {
-                  lastMessageText = "Voice message was sent";
-                } else {
-                  lastMessageText = lastMessage.body;
-                }
-              }
-
-              return GestureDetector(
-                onLongPress: () => _confirmDeleteConversation(
-                  context,
-                  conversationController,
-                  conversation.id,
-                ),
-                child: ChatListTile(
-                  senderName: displayName,
-                  avatarImage: displayImage,
-                  lastMessage: lastMessageText,
-                  isSeen: lastMessage?.seenBy
-                          ?.any((user) => user.id == currentUserId) ??
-                      false,
-                  lastMessageTime: lastMessage?.createdAt ?? DateTime.now(),
-                  onTap: () {
-                    Get.to(
-                      () => ChatRoomPage(
-                        name: displayName,
-                        phoneNumber: displayPhoneNumber,
-                        conversationId: conversation.id,
-                        avatarUrl: displayImage,
-                        createdAt: otherUserCreatedAt,
-                      ),
-                      arguments: {
-                        'currentUserId': currentUserId,
-                      },
-                    );
-                  },
+            if (isGroup) {
+              displayName = conversation.name ?? "Group Chat";
+              displayImage = conversation.logo ?? "";
+            } else {
+              final otherUser = conversation.users.firstWhere(
+                (user) => user.id != currentUserId,
+                orElse: () => User(
+                  id: '',
+                  name: 'Unknown',
+                  email: '',
+                  image: '',
+                  phoneNumber: 'N/A',
                 ),
               );
-            },
-          ),
+
+              displayName = otherUser.name ?? 'Unknown';
+              displayImage = otherUser.image ?? '';
+              displayPhoneNumber = otherUser.phoneNumber ?? 'N/A';
+              otherUserCreatedAt = otherUser.createdAt;
+            }
+
+            final lastMessage = conversation.messages.isNotEmpty
+                ? conversation.messages.last
+                : null;
+
+            String lastMessageText = 'No messages yet';
+            if (lastMessage != null) {
+              if (lastMessage.image != null && lastMessage.image!.isNotEmpty) {
+                lastMessageText = "Image was sent";
+              } else if (lastMessage.audio != null &&
+                  lastMessage.audio!.isNotEmpty) {
+                lastMessageText = "Voice message was sent";
+              } else {
+                lastMessageText = lastMessage.body;
+              }
+            }
+
+            return GestureDetector(
+              onLongPress: () => _confirmDeleteConversation(
+                context,
+                conversationController,
+                conversation.id,
+              ),
+              child: ChatListTile(
+                senderName: displayName,
+                avatarImage: displayImage,
+                lastMessage: lastMessageText,
+                isSeen: lastMessage?.seenBy
+                        ?.any((user) => user.id == currentUserId) ??
+                    false,
+                lastMessageTime: lastMessage?.createdAt ?? DateTime.now(),
+                onTap: () {
+                  Get.to(
+                    () => ChatRoomPage(
+                      name: displayName,
+                      phoneNumber: displayPhoneNumber,
+                      conversationId: conversation.id,
+                      avatarUrl: displayImage,
+                      createdAt: otherUserCreatedAt,
+                    ),
+                    arguments: {
+                      'currentUserId': currentUserId,
+                    },
+                  );
+                },
+              ),
+            );
+          },
         ),
       );
     });

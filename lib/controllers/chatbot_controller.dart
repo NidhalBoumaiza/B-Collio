@@ -34,6 +34,6 @@ class ChatbotController extends GetxController {
   // Clear the conversation
   void clearConversation() {
     messages.clear();
-    initializeChat(); // Reinitialize with the default message
+   initializeChat(); // Reinitialize with the default message
   }
 }

@@ -28,7 +28,7 @@ android {
 
     defaultConfig {
         applicationId = "com.elite.bcalio"
-        minSdk = 21 // Updated to meet ZEGOCLOUD requirements
+        minSdk = 30 // Updated to meet ZEGOCLOUD requirements
         targetSdk = flutter.targetSdkVersion
         versionCode = 1
         versionName = 1
@@ -40,12 +40,15 @@ android {
             keyPassword = keystoreProperties['keyPassword']
             storeFile = keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
             storePassword = keystoreProperties['storePassword']
+
         }
     }
 
     buildTypes {
         release {
             signingConfig = signingConfigs.release
+            minifyEnabled true // Enable ProGuard/Shrinking
+            shrinkResources true // Enable resource shrinking
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
