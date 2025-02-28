@@ -7,7 +7,6 @@ import '../../controllers/user_controller.dart';
 import '../../models/contact_model.dart';
 import '../../models/true_user_model.dart';
 import '../../themes/theme.dart';
-import '../../widgets/base_widget/custom_loading_indicator.dart';
 import '../../widgets/base_widget/custom_snack_bar.dart';
 
 class AddContactScreen extends StatelessWidget {

@@ -23,7 +23,8 @@ import 'utils/zegocloud_constants.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 Future<void> initializeZegoEngine() async {
   await ZegoExpressEngine.createEngineWithProfile(
@@ -32,7 +33,8 @@ Future<void> initializeZegoEngine() async {
       ZegoScenario.Default,
       appSign: ZegoCloudConstants.appSign,
     ),
-  );
+  ).then((value) => debugPrint('ZegoEngine created-----------')).onError(
+      (e, stackTrace) => debugPrint('Failed to create ZegoEngine: $e'));
 }
 
 void main() async {
@@ -68,29 +70,31 @@ void main() async {
           final conversationId = parts[1];
           final callerId = parts[2];
           final isVideoCall = parts[3] == 'true';
-          callController.handleIncomingCall(conversationId, callerId, isVideoCall);
+          callController.handleIncomingCall(
+              conversationId, callerId, isVideoCall);
         } else {
           final conversationController = Get.find<ConversationController>();
           final userController = Get.find<UserController>();
           final token = await userController.getToken();
           if (token != null && token.isNotEmpty) {
             await conversationController.refreshConversations(token);
-            final conversation = conversationController.conversations.firstWhere(
-                  (c) => c.id == payload,
+            final conversation =
+                conversationController.conversations.firstWhere(
+              (c) => c.id == payload,
               orElse: () => throw Exception('Conversation not found'),
             );
             final currentUserId = userController.currentUser.value?.id;
             final otherUser = conversation.users.firstWhere(
-                  (user) => user.id != currentUserId,
+              (user) => user.id != currentUserId,
               orElse: () => throw Exception('Other user not found'),
             );
             Get.to(() => ChatRoomPage(
-              conversationId: conversation.id,
-              name: otherUser.name,
-              phoneNumber: otherUser.phoneNumber ?? '',
-              avatarUrl: otherUser.image,
-              createdAt: otherUser.createdAt,
-            ));
+                  conversationId: conversation.id,
+                  name: otherUser.name,
+                  phoneNumber: otherUser.phoneNumber ?? '',
+                  avatarUrl: otherUser.image,
+                  createdAt: otherUser.createdAt,
+                ));
           }
         }
       }
@@ -112,7 +116,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-          () => GetMaterialApp(
+      () => GetMaterialApp(
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         translations: AppTranslation(),

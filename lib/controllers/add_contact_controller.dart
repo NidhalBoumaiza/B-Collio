@@ -1,5 +1,6 @@
-import 'package:contacts_service/contacts_service.dart';
+// import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -57,15 +58,22 @@ class AddContactController extends GetxController {
 
       // Create the contact
       final contact = Contact(
-        givenName: nameController.text.trim(),
-        phones: [Item(label: "mobile", value: phoneController.text.trim())],
+        displayName: nameController.text.trim(),
+        phones: [
+          Phone(phoneController.text.trim(), label: PhoneLabel.mobile),
+        ],
         emails: emailController.text.isNotEmpty
-            ? [Item(label: "work", value: emailController.text.trim())]
+            ? [
+                Email(
+                  emailController.text.trim(),
+                  label: EmailLabel.work,
+                ),
+              ]
             : [],
       );
 
       // Add contact to phonebook
-      await ContactsService.addContact(contact);
+      await FlutterContacts.insertContact(contact);
 
       // Show success message and redirect
       showSuccessSnackbar("Contact added successfully!".tr);

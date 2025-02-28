@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:contacts_service/contacts_service.dart' as phone_contacts;
+import 'package:flutter_contacts/flutter_contacts.dart' as phone_contacts;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -117,17 +117,17 @@ class ContactController extends GetxController {
       return [];
     }
     try {
-      final phoneContacts = await phone_contacts.ContactsService.getContacts();
+      final phoneContacts = await phone_contacts.FlutterContacts.getContacts();
       final mappedContacts = phoneContacts.map((phoneContact) {
         return Contact(
-          id: phoneContact.identifier ?? '',
+          id: phoneContact.id ?? '',
           name: phoneContact.displayName ?? '',
           email: '',
-          image: phoneContact.avatar != null && phoneContact.avatar!.isNotEmpty
-              ? 'data:image/jpeg;base64,${phoneContact.avatar}'
+          image: phoneContact.photo != null && phoneContact.photo!.isNotEmpty
+              ? 'data:image/jpeg;base64,${phoneContact.photo}'
               : null,
           phoneNumber: phoneContact.phones?.isNotEmpty == true
-              ? phoneContact.phones!.first.value ?? ''
+              ? phoneContact.phones!.first.number ?? ''
               : '',
           isPhoneContact: true, // Mark as phone contact
         );
@@ -197,15 +197,22 @@ class ContactController extends GetxController {
 
       // Create the contact
       final contact = phone_contacts.Contact(
-        givenName: name,
-        phones: [phone_contacts.Item(label: "mobile", value: phone)],
+        displayName: name,
+        phones: [
+          phone_contacts.Phone(phone, label: phone_contacts.PhoneLabel.mobile),
+        ],
         emails: email != null
-            ? [phone_contacts.Item(label: "work", value: email)]
+            ? [
+                phone_contacts.Email(
+                  email,
+                  label: phone_contacts.EmailLabel.work,
+                ),
+              ]
             : [],
       );
 
       // Add contact to phonebook
-      await phone_contacts.ContactsService.addContact(contact);
+      await phone_contacts.FlutterContacts.insertContact(contact);
     } catch (e) {
       throw Exception("Failed to add contact to phone: $e");
     }

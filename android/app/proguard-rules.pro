@@ -38,3 +38,5 @@
 -keep class com.fasterxml.jackson.** { *; }
 -keepnames class com.fasterxml.jackson.** { *; }
 -dontwarn com.fasterxml.jackson.databind.**
+-dontwarn com.itgsa.opensdk.mediaunit.KaraokeMediaHelper
+

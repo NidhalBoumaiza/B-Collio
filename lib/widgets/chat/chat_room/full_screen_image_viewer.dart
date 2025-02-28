@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:gallery_saver/gallery_saver.dart';
+import 'package:gallery_saver_plus/gallery_saver.dart';
+// import 'package:gallery_saver/gallery_saver.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../base_widget/custom_snack_bar.dart';
 

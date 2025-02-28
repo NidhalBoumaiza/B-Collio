@@ -1,4 +1,5 @@
 // lib/controllers/call_service_controller.dart
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -12,7 +13,8 @@ import 'conversation_controller.dart';
 
 class CallServiceController extends GetxController {
   final UserController userController = Get.find<UserController>();
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
   Timer? _pollingTimer;
   final RxBool hasIncomingCall = false.obs;
   Map<String, dynamic>? incomingCallData;
@@ -37,15 +39,16 @@ class CallServiceController extends GetxController {
     required bool isVideoCall,
     required String conversationId,
   }) async {
-    // Caller joins the room immediately
+    print('initiateCall-------------------call   page ------ $targetUserID ==$currentUserID---$conversationId -$currentUserName ==$isVideoCall  ==$targetUserName ');
     Get.to(() => CallPage(
-      localUserID: currentUserID,
-      localUserName: currentUserName,
-      targetUserID: targetUserID,
-      targetUserName: targetUserName,
-      roomID: conversationId,
-      isVideoCall: isVideoCall,
-    ));
+          localUserID: currentUserID,
+          localUserName: currentUserName,
+          targetUserID: targetUserID,
+          targetUserName: targetUserName,
+          roomID: conversationId,
+          isVideoCall: isVideoCall,
+          
+        ));
   }
 
   Widget getCallInvitationButton({
@@ -80,20 +83,25 @@ class CallServiceController extends GetxController {
       final conversations = Get.find<ConversationController>().conversations;
       for (var conv in conversations) {
         final roomId = conv.id;
-        final user = ZegoUser(currentUserId, userController.currentUser.value?.name ?? '');
-        ZegoRoomConfig roomConfig = ZegoRoomConfig.defaultConfig()..isUserStatusNotify = true;
+        final user = ZegoUser(
+            currentUserId, userController.currentUser.value?.name ?? '');
+        ZegoRoomConfig roomConfig = ZegoRoomConfig.defaultConfig()
+          ..isUserStatusNotify = true;
 
-        await ZegoExpressEngine.instance.loginRoom(roomId, user, config: roomConfig);
+        await ZegoExpressEngine.instance
+            .loginRoom(roomId, user, config: roomConfig);
         await Future.delayed(const Duration(milliseconds: 500));
         await ZegoExpressEngine.instance.logoutRoom(roomId);
       }
     });
   }
 
-  void onRoomUserUpdate(String roomID, ZegoUpdateType updateType, List<ZegoUser> userList) {
+  void onRoomUserUpdate(
+      String roomID, ZegoUpdateType updateType, List<ZegoUser> userList) {
     final currentUserId = userController.currentUser.value?.id ?? '';
     if (updateType == ZegoUpdateType.Add && !hasIncomingCall.value) {
-      final caller = userList.firstWhereOrNull((user) => user.userID != currentUserId);
+      final caller =
+          userList.firstWhereOrNull((user) => user.userID != currentUserId);
       if (caller != null) {
         hasIncomingCall.value = true;
         incomingCallData = {
@@ -122,7 +130,8 @@ class CallServiceController extends GetxController {
       importance: Importance.max,
       priority: Priority.high,
       playSound: true,
-      sound: RawResourceAndroidNotificationSound('ringtone'), // From assets/sounds/ringtone.mp3
+      sound: RawResourceAndroidNotificationSound(
+          'ringtone'), // From assets/sounds/ringtone.mp3
       fullScreenIntent: true,
       timeoutAfter: 30000, // Auto-cancel after 30 seconds
     );
@@ -137,7 +146,8 @@ class CallServiceController extends GetxController {
     );
   }
 
-  void handleIncomingCall(String conversationId, String callerId, bool isVideoCall) {
+  void handleIncomingCall(
+      String conversationId, String callerId, bool isVideoCall) {
     incomingCallData = {
       'caller_id': callerId,
       'caller_name': callerId, // Replace with actual name if available
@@ -165,13 +175,14 @@ class CallServiceController extends GetxController {
               flutterLocalNotificationsPlugin.cancel(0);
               Get.back();
               Get.to(() => CallPage(
-                localUserID: userController.currentUser.value?.id ?? '',
-                localUserName: userController.currentUser.value?.name ?? '',
-                targetUserID: callerId,
-                targetUserName: callerId, // Replace with actual name if available
-                roomID: conversationId,
-                isVideoCall: isVideoCall,
-              ));
+                    localUserID: userController.currentUser.value?.id ?? '',
+                    localUserName: userController.currentUser.value?.name ?? '',
+                    targetUserID: callerId,
+                    targetUserName:
+                        callerId, // Replace with actual name if available
+                    roomID: conversationId,
+                    isVideoCall: isVideoCall,
+                  ));
             },
             child: const Text('Accept'),
           ),

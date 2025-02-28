@@ -6,7 +6,6 @@ import '../loading_holder.dart';
 import '../services/firebase_service.dart';
 import '../top_bar.dart';
 
-
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -115,10 +114,10 @@ class _LoginState extends State<Login> {
                       //         isLoading = true;
                       //       });
                       //
-                            final bool result = await FirebaseService.login(
-                              email: email.text,
-                              password: password.text,
-                            );
+                      // final bool result = await FirebaseService.login(
+                      //   email: email.text,
+                      //   password: password.text,
+                      // );
                       //
                       //       if (result && mounted) {
                       //         MainApp.navigatorKey.currentState
